@@ -58,5 +58,5 @@ class AvitoParser:
 
 if __name__ == '__main__':
     AvitoParser(
-        url='https://www.avito.ru/moskva/predlozheniya_uslug/reklama_poligrafiya-ASgBAgICAUSYC76fAQ?cd=1&q=%D0%BF%D0%B5%D1%87%D0%B0%D1%82%D1%8C+%D0%B1%D0%B0%D0%BD%D0%BD%D0%B5%D1%80%D0%BE%D0%B2',
+        url='https://www.avito.ru/voronezh?cd=1&q=%D0%BF%D0%B5%D1%87%D0%B0%D1%82%D1%8C+%D0%BD%D0%B0+%D0%B1%D0%B0%D0%BD%D0%BD%D0%B5%D1%80%D0%B5',
         count=3, version_main=116, items=['печать', 'баннер']).run()
