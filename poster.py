@@ -1,27 +1,35 @@
 import json
+import time
 
 import undetected_chromedriver as uc
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 
 
-class AvitoParser:
-    def __init__(self, url: str, items: list, count=100, version_main=None):
+class AvitoPoster:
+    def __init__(self, url: str, version_main=None):
         self.version_main = version_main
-        self.count = count
-        self.items = items
+        # self.count = count
+        # self.items = items
         self.url = url
         self.data = []
 
     def __set_up(self):
-        options = Options()
-        options.add_argument("--headless=new")
+        # options = Options()
+        # options.add_argument("--headless=new")
 
-        self.driver = uc.Chrome(version_main=self.version_main, options=options)
-        # self.driver = uc.Chrome(version_main=116)
+        self.driver = uc.Chrome(version_main=self.version_main)
+        # self.driver = uc.Chrome(version_main=self.version_main, options=options)
 
     def __get_url(self):
         self.driver.get(self.url)
+        time.sleep(5)
+
+    def create_item(self):
+        self.driver.find_element(By.CSS_SELECTOR, "[data-marker='header/login-button']").click()
+        time.sleep(5)
+
+
 
     def __paginator(self):
         while self.driver.find_elements(By.CSS_SELECTOR, "[data-marker='pagination-button/nextPage']"):
@@ -36,17 +44,15 @@ class AvitoParser:
             description = title.find_element(By.CSS_SELECTOR, "[class='iva-item-descriptionStep-C0ty1']").text
             link = title.find_element(By.CSS_SELECTOR, "[data-marker='item-title']").get_attribute("href")
             price = title.find_element(By.CSS_SELECTOR, "[data-marker='item-price']").text
-            city = link[21:][:link[21:].find('/')]
             data = {
                 'name': name,
                 'description': description,
                 'link': link,
-                'price': price,
-                'city': city
+                'price': price
             }
             if any([item.lower() in description.lower() for item in self.items]):
                 self.data.append(data)
-                print(name, description, link, price, city)
+                print(name, description, link, price)
 
         self.__save_data()
 
@@ -57,10 +63,11 @@ class AvitoParser:
     def run(self):
         self.__set_up()
         self.__get_url()
-        self.__paginator()
+        self.create_item()
+        # self.__paginator()
 
 
 if __name__ == '__main__':
-    AvitoParser(
-        url='https://www.avito.ru/voronezh/predlozheniya_uslug/reklama_poligrafiya-ASgBAgICAUSYC76fAQ?cd=1&q=%D0%BF%D0%B5%D1%87%D0%B0%D1%82%D1%8C+%D0%B1%D0%B0%D0%BD%D0%BD%D0%B5%D1%80%D0%BE%D0%B2',
-        count=3, version_main=116, items=['печать', 'баннер', 'баннера']).run()
+    url = 'https://www.avito.ru/'
+    AvitoPoster(url=url,
+                version_main=116).run()
