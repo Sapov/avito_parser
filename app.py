@@ -6,16 +6,16 @@ from flask import Flask, render_template
 from flask import request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-
 from flask_bootstrap import Bootstrap
 from main import AvitoParser
 
 # db = SQLAlchemy(model_class=Base)
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('PATH_POSTGRES')
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://sasha:123123@localhost:5432/base_api"
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
 
 
 bootstrap = Bootstrap(app)
