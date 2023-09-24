@@ -1,5 +1,7 @@
+import os
 from os import environ
-
+from dotenv import load_dotenv
+load_dotenv()
 from flask import Flask, render_template
 from flask import request
 from flask_sqlalchemy import SQLAlchemy
@@ -11,12 +13,10 @@ from main import AvitoParser
 # db = SQLAlchemy(model_class=Base)
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('PATH_POSTGRES')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('PATH_POSTGRES')
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///project.db"
-db.init_app(app)
 
 bootstrap = Bootstrap(app)
 menu = [
