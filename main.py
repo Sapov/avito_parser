@@ -7,7 +7,7 @@ from selenium.webdriver.chrome.options import Options
 
 class AvitoParser:
     def __init__(self, url: str, items: list, count=100, version_main=None):
-        self.version_main = version_main
+        self.version_main = 116
         self.count = count
         self.items = items
         self.url = url
@@ -62,5 +62,5 @@ class AvitoParser:
 
 if __name__ == '__main__':
     AvitoParser(
-        url='https://www.avito.ru/voronezh/predlozheniya_uslug/reklama_poligrafiya-ASgBAgICAUSYC76fAQ?cd=1&q=%D0%BF%D0%B5%D1%87%D0%B0%D1%82%D1%8C+%D0%B1%D0%B0%D0%BD%D0%BD%D0%B5%D1%80%D0%BE%D0%B2',
-        count=3, version_main=116, items=['печать', 'баннер', 'баннера']).run()
+        url='https://www.avito.ru/voronezh/noutbuki?cd=1&q=lenovo+thinkpad+x1+carbon',
+        count=3, version_main=116, items=['Lenovo', 'X1', 'carbon', 'Gen 5']).run()

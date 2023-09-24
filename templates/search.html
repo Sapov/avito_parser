@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+{{super()}}
+
+<form action="/search" method="POST" class="form-contact">
+<p><label>Введите запрос </label><input type="text" name="url" value="" required></p>
+<p><label>ключевые слова через запятую </label><input type="text" name="keywords" value="" required></p>
+<p><input type="submit"  value="Искать"/></p>
+
+
+</form>
+
+{% endblock %}
+
