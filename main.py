@@ -3,6 +3,7 @@ import json
 import undetected_chromedriver as uc
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from alchemy import create_items
 
 
 class AvitoParser:
@@ -32,12 +33,14 @@ class AvitoParser:
     def __parse_page(self):
         titles = self.driver.find_elements(By.CSS_SELECTOR, "[data-marker='item']")
         for title in titles:
+            item_id = title.get_attribute('data-item-id')
             name = title.find_element(By.CSS_SELECTOR, "[data-marker='item-title']").text
             description = title.find_element(By.CSS_SELECTOR, "[class='iva-item-descriptionStep-C0ty1']").text
             link = title.find_element(By.CSS_SELECTOR, "[data-marker='item-title']").get_attribute("href")
             price = title.find_element(By.CSS_SELECTOR, "[data-marker='item-price']").text
             city = link[21:][:link[21:].find('/')]
             data = {
+                'item_id': item_id,
                 'name': name,
                 'description': description,
                 'link': link,
@@ -45,10 +48,19 @@ class AvitoParser:
                 'city': city
             }
             if any([item.lower() in description.lower() for item in self.items]):
-                self.data.append(data)
-                print(name, description, link, price, city)
+                # self.data.append(data)
+                create_items(data)
+                self.__printing(data)
 
-        self.__save_data()
+            # self.__save_data()
+
+    def __printing(self, data):
+        print('[+] ITEM_ID = ', data['item_id'])
+        print('[+] NAME = ', data['name'])
+        print('[+] DECRIPTION = ', data['description'])
+        print('[+] LINK = ', data['link'])
+        print('[+] PRICE = ', data['price'])
+        print('[+] CITY = ', data['city'])
 
     def __save_data(self):
         with open('items.json', 'w', encoding='UTF-8') as file:
