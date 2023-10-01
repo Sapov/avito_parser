@@ -20,27 +20,6 @@ menu = [
 ]
 
 
-class Base:
-    __tablename__ = 'items'
-
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String())
-    description = db.Column(db.Text())
-    link = db.Column(db.String())
-    price = db.Column(db.String())
-    created_at = db.Column(db.String())
-    city = db.Column(db.String())
-
-    def __init__(self, id, name, description, link, price, created_at, city):
-        self.city = city
-        self.created_at = created_at
-        self.price = price
-        self.link = link
-        self.description = description
-        self.name = name
-        self.id = id
-
-
 @app.route('/')
 def index():
     return render_template('index.html', menu=menu)
