@@ -48,16 +48,17 @@ class AvitoParser:
                 'city': city
             }
             if any([item.lower() in description.lower() for item in self.items]):
-                # self.data.append(data)
-                new_numbers = []
                 if fetch_id(data['item_id']):
                     create_items(data)
-                    new_numbers.append(data['item_id'])
-                print(new_numbers)
+                    self.new_items(data)
 
-                # self.__printing(data)
+    @staticmethod
+    def new_items(data):
+        '''новые объявления'''
+        new_numbers = []
+        new_numbers.append(data['item_id'])
 
-            # self.__save_data()
+        print('[+] - появились новые объявления', new_numbers)
 
     @staticmethod
     def __convert_price(price):
@@ -69,16 +70,13 @@ class AvitoParser:
             return int(price[:-1].replace(' ', ''))
 
     def __printing(self, data):
+        '''Вывод в консольку'''
         print('[+] ITEM_ID = ', data['item_id'])
         print('[+] NAME = ', data['name'])
         print('[+] DECRIPTION = ', data['description'])
         print('[+] LINK = ', data['link'])
         print('[+] PRICE = ', data['price'])
         print('[+] CITY = ', data['city'])
-
-    def __save_data(self):
-        with open('items.json', 'w', encoding='UTF-8') as file:
-            json.dump(self.data, file, ensure_ascii=False, indent=4)
 
     def run(self):
         self.__set_up()
