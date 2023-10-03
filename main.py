@@ -51,6 +51,7 @@ class AvitoParser:
                 if fetch_id(data['item_id']):
                     create_items(data)
                     self.new_items(data)
+                    self.__printing(data)
 
     @staticmethod
     def new_items(data):
@@ -60,6 +61,7 @@ class AvitoParser:
 
         print('[+] - появились новые объявления', new_numbers)
 
+
     @staticmethod
     def __convert_price(price):
         '''Преобразовываем цену в цифру'''
@@ -67,7 +69,7 @@ class AvitoParser:
             print('[!] Цена не указана')
             return 0
         else:
-            return int(price[:-1].replace(' ', ''))
+            return int(price[:price.find('₽')].replace(' ', ''))
 
     def __printing(self, data):
         '''Вывод в консольку'''
@@ -86,5 +88,8 @@ class AvitoParser:
 
 if __name__ == '__main__':
     AvitoParser(
-        url='https://www.avito.ru/voronezh/noutbuki?cd=1&q=lenovo+thinkpad+x1+carbon',
-        count=3, version_main=116, items=['Lenovo', 'X1', 'carbon', 'Gen 5', 'Gen 4', 'Gen 6']).run()
+        url='https://www.avito.ru/voronezh?localPriority=0&q=офис+в+аренду',
+        # url='https://www.avito.ru/voronezh/noutbuki?cd=1&q=lenovo+thinkpad+x1+carbon',
+        count=3, version_main=116,
+        items=['Северный район', 'под офис']).run()
+        # items=['Lenovo', 'X1', 'carbon', 'Gen 5', 'Gen 4', 'Gen 6']).run()

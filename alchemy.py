@@ -67,19 +67,23 @@ def fetch_id(id_item):
             return False
 
 
-def change_valid():
-    '''Объявления меньше 5000 руб. и объявления больше 70 000 руб. нам не интересны'''
+def view_items(id_item):
     with Session(engine) as session:
-        stmt = select(Avito).where(Avito.price <= 5000)
-        resp = session.scalars(stmt)
-        for i in resp:
-            print(i)
+        stmt = select(Avito).where(Avito.item_id == id_item)
+        res = session.scalar(stmt)
+        print('[!] Новое объявление', res)
 
+    def change_valid():
+        '''Объявления меньше 5000 руб. и объявления больше 70 000 руб. нам не интересны'''
+        with Session(engine) as session:
+            stmt = select(Avito).where(Avito.price <= 5000)
+            resp = session.scalars(stmt)
+            for i in resp:
+                print(i)
 
-def main():
-    Base.metadata.create_all(engine)
-    change_valid()
+    def main():
+        Base.metadata.create_all(engine)
+        change_valid()
 
-
-if __name__ == '__main__':
-    main()
+    if __name__ == '__main__':
+        main()
